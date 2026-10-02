@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La Picota · Restaurante en Almorox</title>
+<meta name="description" content="La Picota, restaurante en la plaza de Almorox (Toledo). Menú del día, sugerencias del chef, cenas con música en directo y celebraciones. Abrimos todos los días.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #ecebd9;
+    --paper-2: #e1e0c6;
+    --ink: #252c15;
+    --muted: #596040;
+    --line: rgba(37, 44, 21, .28);
+    --olive: #3b4720;
+    --olive-deep: #283114;
+    --on-olive: #ecebd9;
+    --gold: #c9a74e;
+    --night: #16140e;
+    --on-night: #efe7cf;
+
+    --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --sans: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #1b1f12;
+      --paper-2: #232819;
+      --ink: #e7e5d0;
+      --muted: #aeb08f;
+      --line: rgba(231, 229, 208, .24);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #1b1f12;
+    --paper-2: #232819;
+    --ink: #e7e5d0;
+    --muted: #aeb08f;
+    --line: rgba(231, 229, 208, .24);
+  }
+
+  *, *::before, *::after { box-sizing: inherit; }
+  html {
+    background: var(--olive-deep);
+    scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 4.5rem);
+    scroll-behavior: smooth;
+  }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  img, svg { max-width: 100%; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
+
+  h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.05; margin: 0; }
+  h2 { font-size: clamp(2.2rem, 5vw, 3.4rem); }
+  p { margin: 0 0 1em; }
+
+  .wrap { width: min(100% - 2.5rem, 68rem); margin-inline: auto; }
+
+  /* Cabecera */
+  .top {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 10;
+    background: var(--olive-deep);
+    color: var(--on-olive);
+    border-bottom: 1px solid rgba(236, 235, 217, .18);
+  }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 3.75rem; }
+  .brand { font-family: var(--serif); font-size: 1.6rem; font-weight: 600; text-decoration: none; }
+  .top nav { display: flex; align-items: center; gap: 1.5rem; }
+  .top nav a { text-decoration: none; font-size: .95rem; }
+  .top nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .top nav .links { display: flex; gap: 1.5rem; }
+  @media (max-width: 40rem) { .top nav .links { display: none; } }
+
+  .btn {
+    display: inline-block;
+    padding: .7rem 1.25rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: .98rem;
+    text-decoration: none;
+    border: 1.5px solid currentColor;
+    line-height: 1.2;
+  }
+  .btn-solid { background: var(--on-olive); color: var(--olive-deep); border-color: var(--on-olive); }
+  .btn-solid:hover { background: #fff; }
+  .btn-line:hover { background: rgba(236, 235, 217, .12); }
+
+  /* Portada */
+  .hero { background: var(--olive); color: var(--on-olive); padding: clamp(3rem, 8vw, 6rem) 0 clamp(3rem, 7vw, 5rem); overflow: hidden; }
+  .hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 2rem; align-items: center; }
+  .hero h1 { font-size: clamp(4rem, 13vw, 9rem); letter-spacing: -.01em; }
+  .hero .place { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: clamp(1.4rem, 3vw, 2rem); margin: .5rem 0 1.5rem; }
+  .hero p.bio { max-width: 30rem; font-size: 1.15rem; }
+  .hero .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.75rem; }
+  .tower { width: 100%; max-width: 26rem; justify-self: center; }
+  .tower path, .tower line { fill: none; stroke: var(--on-olive); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .tower .draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 2.6s cubic-bezier(.3, .6, .3, 1) forwards; }
+  .tower .d2 { animation-delay: .5s; }
+  .tower .d3 { animation-delay: 1.1s; }
+  .tower .d4 { animation-delay: 1.6s; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @media (max-width: 52rem) {
+    .hero .wrap { grid-template-columns: 1fr; }
+    .tower { max-width: 17rem; justify-self: start; order: -1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tower .draw { animation: none; stroke-dashoffset: 0; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* Secciones */
+  section { padding: clamp(3.5rem, 8vw, 6rem) 0; }
+  .split { display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(2rem, 6vw, 5rem); align-items: start; }
+  @media (max-width: 52rem) { .split { grid-template-columns: 1fr; } }
+  .lead { color: var(--muted); max-width: 26rem; margin-top: 1.25rem; }
+
+  /* Menús */
+  .carta { list-style: none; margin: 0; padding: 0; }
+  .carta > li { padding: 1.75rem 0; border-top: 1px solid var(--line); }
+  .carta > li:last-child { border-bottom: 1px solid var(--line); }
+  .carta .head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .carta h3 { font-size: clamp(1.6rem, 3.4vw, 2.1rem); }
+  .carta .price { font-family: var(--serif); font-weight: 600; font-size: clamp(1.8rem, 4vw, 2.5rem); white-space: nowrap; }
+  .carta .when { margin: .15rem 0 .75rem; color: var(--muted); font-size: .98rem; }
+  .carta .dishes { margin: 0; }
+  .carta .includes { margin: .75rem 0 0; font-size: .95rem; color: var(--muted); }
+
+  /* Música */
+  .night { background: var(--night); color: var(--on-night); }
+  .night h2 { color: var(--gold); }
+  .night .lead { color: rgba(239, 231, 207, .78); }
+  .artists { list-style: none; margin: 0 0 1.75rem; padding: 0; font-family: var(--serif); font-size: clamp(1.9rem, 4.4vw, 3rem); line-height: 1.2; font-style: italic; }
+  .artists li + li { margin-top: .15em; }
+  .night .btn { color: var(--gold); }
+  .night .btn:hover { background: rgba(201, 167, 78, .14); }
+
+  /* Grupos */
+  .groups { background: var(--paper-2); }
+  .uses { list-style: none; margin: 0 0 1.5rem; padding: 0; display: grid; gap: .6rem; }
+  .uses li { padding-left: 1.4rem; position: relative; }
+  .uses li::before { content: ""; position: absolute; left: 0; top: .72em; width: .6rem; height: 1.5px; background: var(--olive); }
+  .groups .btn { color: var(--olive); }
+  .groups .btn:hover { background: rgba(59, 71, 32, .08); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .groups .btn { color: var(--on-night); }
+    :root:not([data-theme="light"]) .uses li::before { background: var(--gold); }
+  }
+  :root[data-theme="dark"] .groups .btn { color: var(--on-night); }
+  :root[data-theme="dark"] .uses li::before { background: var(--gold); }
+
+  /* Horario y contacto */
+  .hours { width: 100%; border-collapse: collapse; margin: 0 0 1.25rem; }
+  .hours th, .hours td { text-align: left; padding: .8rem 0; border-top: 1px solid var(--line); vertical-align: top; font-weight: 400; }
+  .hours tr:last-child th, .hours tr:last-child td { border-bottom: 1px solid var(--line); }
+  .hours th { font-weight: 600; padding-right: 1rem; width: 38%; }
+  .hours .rest { color: var(--muted); }
+  address { font-style: normal; }
+  .contact p { margin-bottom: .6em; }
+  .contact .big { font-family: var(--serif); font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 600; line-height: 1.1; }
+  .contact .links { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+  .contact .btn { color: var(--olive); }
+  .contact .btn:hover { background: rgba(59, 71, 32, .08); }
+  .contact .btn.fill { background: var(--olive); color: var(--on-olive); border-color: var(--olive); }
+  .contact .btn.fill:hover { background: var(--olive-deep); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .contact .btn { color: var(--on-night); }
+    :root:not([data-theme="light"]) .contact .btn.fill { color: var(--on-olive); }
+  }
+  :root[data-theme="dark"] .contact .btn { color: var(--on-night); }
+  :root[data-theme="dark"] .contact .btn.fill { color: var(--on-olive); }
+
+  footer { background: var(--olive-deep); color: var(--on-olive); padding: 2rem 0; font-size: .92rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 2rem; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio">La Picota</a>
+    <nav aria-label="Principal">
+      <div class="links">
+        <a href="#menus">Menús</a>
+        <a href="#musica">Música en directo</a>
+        <a href="#grupos">Grupos</a>
+        <a href="#horario">Horario</a>
+      </div>
+      <a class="btn btn-solid" href="tel:+34910264769">Reservar</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1>La Picota</h1>
+        <p class="place">Restaurante en la plaza de Almorox</p>
+        <p class="bio">Un lugar sencillo y acogedor para comer bien, conversar y sentirse a gusto. Cocina casera y buena atención, todos los días.</p>
+        <div class="actions">
+          <a class="btn btn-solid" href="tel:+34910264769">Reservar mesa</a>
+          <a class="btn btn-line" href="https://www.google.com/maps/search/?api=1&amp;query=Plaza+de+la+Constituci%C3%B3n+6+Almorox+Toledo" target="_blank" rel="noopener">Cómo llegar</a>
+        </div>
+      </div>
+
+      <svg class="tower" viewBox="0 0 400 380" role="img" aria-label="Dibujo de la picota de Almorox con las montañas al fondo">
+        <path class="draw d1" pathLength="1" d="M10 250 L75 190 L112 222 L172 140 L232 222 L280 180 L330 230 L390 195"/>
+        <path class="draw d2" pathLength="1" d="M105 350 H295 M125 334 H275 M145 318 H255 M165 302 H235"/>
+        <path class="draw d3" pathLength="1" d="M184 302 L189 128 M216 302 L211 128 M189 200 H211 M188 250 H212"/>
+        <path class="draw d4" pathLength="1" d="M170 128 H230 M176 128 L182 108 H218 L224 128 M186 108 V78 Q200 62 214 78 V108 M200 62 V40 M192 48 H208"/>
+      </svg>
+    </div>
+  </div>
+
+  <section id="menus">
+    <div class="wrap split">
+      <div>
+        <h2>Comer en La Picota</h2>
+        <p class="lead">Menús caseros con pan, bebida y postre. Los platos cambian cada semana y los publicamos en Instagram.</p>
+      </div>
+      <ul class="carta">
+        <li>
+          <div class="head"><h3>Menú del día</h3><span class="price">13,90 €</span></div>
+          <p class="when">De lunes a jueves</p>
+          <p class="dishes">Primeros a elegir, como pasta a la carbonara, ensalada mixta o revuelto de ajetes con gambas. Segundos como cordon bleu de pavo, filete de pollo o boquerones fritos. Postres caseros: flan de huevo, tarta de la casa o fruta de temporada.</p>
+          <p class="includes">Incluye pan, bebida y postre o café.</p>
+        </li>
+        <li>
+          <div class="head"><h3>Menú especial de viernes</h3><span class="price">15,90 €</span></div>
+          <p class="when">Cada viernes</p>
+          <p class="dishes">Un menú distinto cada semana, con primeros y segundos a elegir y postres caseros.</p>
+          <p class="includes">Incluye pan, bebida y postre o café.</p>
+        </li>
+        <li>
+          <div class="head"><h3>Sugerencias del chef</h3><span class="price">25,50 €</span></div>
+          <p class="when">Sábados y domingos</p>
+          <p class="dishes">Melón con jamón ibérico, revuelto de morcilla con piñones o ensalada templada con gulas y gambas. Después, cachopo de ciervo, merluza gratinada a la crema de naranja, chuletillas de cordero o codillo asado.</p>
+          <p class="includes">Incluye bebida (agua, caña, copa de vino o doble de cerveza) y postre o café.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="musica" class="night">
+    <div class="wrap split">
+      <div>
+        <h2>Cenas con música en directo</h2>
+        <p class="lead">Algunos fines de semana, cena y espectáculo en el restaurante: voz, saxo, ritmos latinos y música para bailar.</p>
+      </div>
+      <div>
+        <ul class="artists" aria-label="Artistas que han actuado en La Picota">
+          <li>José Cano</li>
+          <li>Marena Navarro</li>
+          <li>José Daniel</li>
+          <li>Alex Gallardo</li>
+        </ul>
+        <p class="lead" style="margin-top:0">Consulta las próximas fechas y reserva tu mesa con tiempo.</p>
+        <a class="btn" href="https://www.instagram.com/lapicotarestaurante/?hl=es" target="_blank" rel="noopener">Ver próximas fechas en Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="grupos" class="groups">
+    <div class="wrap split">
+      <div>
+        <h2>Celebraciones y grupos</h2>
+        <p class="lead">Un espacio pensado para disfrutar de otra manera.</p>
+      </div>
+      <div>
+        <p>Nuestro salón principal se reserva para grupos de más de 15 personas, con un servicio cuidado en cada ocasión. Para grupos más pequeños seguimos atendiendo en la cafetería y la terraza.</p>
+        <ul class="uses">
+          <li>Celebraciones familiares: cumpleaños, comuniones y fechas especiales</li>
+          <li>Reuniones y encuentros en un ambiente tranquilo</li>
+          <li>Eventos privados</li>
+        </ul>
+        <a class="btn" href="tel:+34910264769">Llamar para reservar el salón</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="horario">
+    <div class="wrap split">
+      <div>
+        <h2>Horario y cómo llegar</h2>
+        <p class="lead">Abrimos todos los días.</p>
+      </div>
+      <div class="contact">
+        <table class="hours">
+          <tbody>
+            <tr><th scope="row">Lunes a sábado</th><td>8:30 a 17:00<br>19:00 a 24:00<br><span class="rest">De 17:00 a 19:00 el equipo descansa</span></td></tr>
+            <tr><th scope="row">Domingos</th><td>8:30 a 17:00</td></tr>
+          </tbody>
+        </table>
+
+        <address>
+          <p class="big">Pl. de la Constitución, 6</p>
+          <p>45900 Almorox, Toledo</p>
+          <p>Reservas: <a href="tel:+34910264769"><strong>910 264 769</strong></a></p>
+        </address>
+
+        <div class="links">
+          <a class="btn fill" href="tel:+34910264769">Llamar</a>
+          <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Plaza+de+la+Constituci%C3%B3n+6+Almorox+Toledo" target="_blank" rel="noopener">Abrir en el mapa</a>
+          <a class="btn" href="https://www.instagram.com/lapicotarestaurante/?hl=es" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>La Picota Restaurante</span>
+    <span>Pl. de la Constitución, 6, Almorox (Toledo)</span>
+  </div>
+</footer>
+
+</body>
+</html>
